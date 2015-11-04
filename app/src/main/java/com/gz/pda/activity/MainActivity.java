@@ -1,7 +1,6 @@
 package com.gz.pda.activity;
 
 
-import android.util.Log;
 
 import com.gz.pda.R;
 import com.squareup.timessquare.CalendarPickerView;

@@ -1,4 +1,4 @@
-package com.gz.pda.activity;
+package com.gz.pda.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
