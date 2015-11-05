@@ -13,6 +13,12 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/tabwidget"
         android:layout_below="@+id/title_bar"/>
+    <View
+        android:id="@+id/seperator"
+        android:layout_height="1px"
+        android:layout_width="match_parent"
+        android:background="@android:color/black"
+        android:layout_above="@+id/tabwidget"/>
     <com.gz.pda.view.PagerTabWidget
         android:id="@+id/tabwidget"
         android:layout_width="match_parent"

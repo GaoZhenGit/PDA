@@ -14,7 +14,7 @@
         android:paddingBottom="16dp"
         android:scrollbarStyle="outsideOverlay"
         android:clipToPadding="false"
-        android:background="#FFFFFF"
+        android:background="@color/defalut"
         />
 
 </LinearLayout>
