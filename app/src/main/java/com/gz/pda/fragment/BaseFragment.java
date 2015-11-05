@@ -12,7 +12,7 @@ import android.widget.Toast;
  * Created by host on 2015/11/5.
  */
 public abstract class BaseFragment extends Fragment {
-    private View convertView;
+    protected View convertView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

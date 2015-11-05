@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/title_bar_height"
+    android:background="@color/color_theme">
+
+    <RelativeLayout
+        android:id="@+id/btn_title_left"
+        android:layout_width="45dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:background="@drawable/btn_selector_round">
+
+        <ImageView
+            android:id="@+id/img_title_left"
+            android:layout_width="@dimen/icon_edge"
+            android:layout_height="@dimen/icon_edge"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/icon_left" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_title_middle"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:maxWidth="120dp"
+        android:singleLine="true"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/text_size_large"
+        tools:text="middletext" />
+
+    <RelativeLayout
+        android:id="@+id/btn_title_right"
+        android:layout_width="45dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/btn_selector_round">
+
+        <ImageView
+            android:id="@+id/img_title_right"
+            android:layout_width="@dimen/icon_edge"
+            android:layout_height="@dimen/icon_edge"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/search" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/btn_title_right2"
+        android:layout_width="45dp"
+        android:layout_height="match_parent"
+        android:layout_toLeftOf="@+id/btn_title_right"
+        android:background="@drawable/btn_selector_round"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <ImageView
+            android:id="@+id/img_title_right2"
+            android:layout_width="@dimen/icon_edge"
+            android:layout_height="@dimen/icon_edge"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/search" />
+    </RelativeLayout>
+
+</RelativeLayout>
