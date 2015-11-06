@@ -11,6 +11,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
+ * show timetable in calendar
  * Created by host on 2015/11/5.
  */
 public class CalendarFragment extends BaseFragment {
@@ -37,6 +38,11 @@ public class CalendarFragment extends BaseFragment {
 
     @Override
     void initView() {
+
+    }
+
+    @Override
+    void setListener() {
 
     }
 }

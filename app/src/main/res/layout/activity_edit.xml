@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/defalut">
+    <include
+        layout="@layout/title_bar"/>
+    <EditText
+        android:id="@+id/et_old_password"
+        android:layout_width="match_parent"
+        android:hint="请输入原密码"
+        android:layout_height="@dimen/title_bar_height"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="@dimen/margin_left"
+        android:paddingRight="@dimen/margin_right"
+        android:singleLine="true"
+        android:background="@color/white"
+        android:visibility="gone"
+        android:password="true"
+        tools:visibility="visible"/>
+
+    <EditText
+        android:id="@+id/et_modify"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="@dimen/margin_left"
+        android:paddingRight="@dimen/margin_right"
+        android:singleLine="true"
+        android:background="@color/white"/>
+
+    <EditText
+        android:id="@+id/et_password_confirm"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height"
+        android:layout_marginTop="20dp"
+        android:hint="请确认密码"
+        android:paddingLeft="@dimen/margin_left"
+        android:paddingRight="@dimen/margin_right"
+        android:singleLine="true"
+        android:background="@color/white"
+        android:inputType="textPassword"
+        android:visibility="gone"
+        tools:visibility="visible"/>
+</LinearLayout>

@@ -9,6 +9,8 @@
     <dimen name="text_size_large">18sp</dimen>
     <dimen name="text_size_huge">20sp</dimen>
     <dimen name="title_icon_width">18dp</dimen>
+    <dimen name="margin_top">10dp</dimen>
+    <dimen name="margin_bottom">10dp</dimen>
     <dimen name="margin_left">10dp</dimen>
     <dimen name="margin_right">10dp</dimen>
     <dimen name="button_height">40dp</dimen>

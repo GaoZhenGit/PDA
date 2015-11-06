@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 /**
+ * base fragment
  * Created by host on 2015/11/5.
  */
 public abstract class BaseFragment extends Fragment {
@@ -19,6 +20,7 @@ public abstract class BaseFragment extends Fragment {
         setConvertView(inflater, container);
         fetchData();
         initView();
+        setListener();
         return convertView;
     }
 
@@ -28,6 +30,8 @@ public abstract class BaseFragment extends Fragment {
     abstract void fetchData();
     //页面细节初始化
     abstract void initView();
+    //设置监听器
+    abstract void setListener();
 
     //不用强制类型转换的findviewbyid
     protected <E> E findView(int id) {

@@ -12,6 +12,7 @@ import com.androidquery.AQuery;
 import com.gz.pda.R;
 import com.gz.pda.adapter.TabPagerAdapter;
 import com.gz.pda.fragment.CalendarFragment;
+import com.gz.pda.fragment.TimeTableFragment;
 import com.gz.pda.fragment.UserFragment;
 import com.gz.pda.listener.OnTabSelectedListener;
 import com.gz.pda.view.PagerTabWidget;
@@ -32,7 +33,7 @@ public class MainActivity extends BaseActivity {
     protected void fetchData() {
         fragments = new ArrayList<>();
 
-        fragments.add(new Fragment());
+        fragments.add(new TimeTableFragment());
         fragments.add(new CalendarFragment());
         fragments.add(new UserFragment());
     }
@@ -69,14 +70,17 @@ public class MainActivity extends BaseActivity {
                     case 0:
                         aQuery.id(R.id.img_tab_calendar).image(R.mipmap.ic_calendar_grey);
                         aQuery.id(R.id.img_tab_user).image(R.mipmap.ic_user_grey);
+                        aQuery.id(R.id.img_tab_timetable).image(R.mipmap.ic_timetable);
                         break;
                     case 1:
                         aQuery.id(R.id.img_tab_calendar).image(R.mipmap.ic_calendar);
                         aQuery.id(R.id.img_tab_user).image(R.mipmap.ic_user_grey);
+                        aQuery.id(R.id.img_tab_timetable).image(R.mipmap.ic_timetable_grey);
                         break;
                     case 2:
                         aQuery.id(R.id.img_tab_calendar).image(R.mipmap.ic_calendar_grey);
                         aQuery.id(R.id.img_tab_user).image(R.mipmap.ic_user);
+                        aQuery.id(R.id.img_tab_timetable).image(R.mipmap.ic_timetable_grey);
                         break;
                 }
             }
