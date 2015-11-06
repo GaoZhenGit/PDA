@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * show timetable on list
  * Created by host on 2015/11/6.
  */
 public class TimeTableFragment extends BaseFragment {
@@ -41,7 +42,9 @@ public class TimeTableFragment extends BaseFragment {
         table1.setMonth("11");
         table1.setDay("6");
         table1.setTime("16:50");
-        table1.setText("今天完成界面了吗");
+        table1.setText("今天完成界面了吗今天完成界面了吗今天完成界面了吗今天完成界面了吗" +
+                "今天完成界面了吗今天完成界面了吗今天完成界面了吗今天完成界面了吗" +
+                "今天完成界面了吗今天完成界面了吗今天完成界面了吗今天完成界面了吗");
 
         TimeTable table2 = new TimeTable();
         table2.setTitle("第二号");
@@ -50,6 +53,7 @@ public class TimeTableFragment extends BaseFragment {
         table2.setDay("6");
         table2.setTime("17:00");
         table2.setText("今天完成界面了吗？？？");
+        table2.setAlarm(true);
         timeTables.add(table1);
         timeTables.add(table2);
         timeTableAdapter.notifyDataSetChanged();

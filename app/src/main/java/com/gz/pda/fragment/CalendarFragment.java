@@ -28,9 +28,9 @@ public class CalendarFragment extends BaseFragment {
     @Override
     void fetchData() {
         maxYear = Calendar.getInstance();
-        maxYear.add(Calendar.YEAR, 2);
+        maxYear.add(Calendar.YEAR, 1);
         minYear = Calendar.getInstance();
-        minYear.add(Calendar.YEAR, -2);
+        minYear.add(Calendar.YEAR, 0);
         calendarPickerView.init(minYear.getTime(),maxYear.getTime())
                 .inMode(CalendarPickerView.SelectionMode.MULTIPLE)
                 .withSelectedDate(new Date());

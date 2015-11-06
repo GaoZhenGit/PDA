@@ -14,6 +14,7 @@ import com.gz.pda.datamodel.TimeTable;
 import java.util.List;
 
 /**
+ * view of time table
  * Created by host on 2015/11/6.
  */
 public class TimeTableAdapter extends BaseAdapter {
@@ -49,7 +50,7 @@ public class TimeTableAdapter extends BaseAdapter {
             viewHolder.title = (TextView) convertView.findViewById(R.id.tv_table_title);
             viewHolder.time = (TextView) convertView.findViewById(R.id.tv_table_time);
             viewHolder.text = (TextView) convertView.findViewById(R.id.tv_table_text);
-            viewHolder.star = (ImageView) convertView.findViewById(R.id.btn_img_star);
+            viewHolder.alarm = (ImageView) convertView.findViewById(R.id.btn_img_alarm);
             convertView.setTag(viewHolder);
         }else{
             viewHolder= (ViewHolder) convertView.getTag();
@@ -62,6 +63,9 @@ public class TimeTableAdapter extends BaseAdapter {
                 +"   "
                 +timeTable.getTime());
         viewHolder.text.setText(timeTable.getText());
+        if (timeTable.isAlarm()){
+            viewHolder.alarm.setVisibility(View.VISIBLE);
+        }
         return convertView;
     }
 
@@ -69,6 +73,6 @@ public class TimeTableAdapter extends BaseAdapter {
         public TextView title;
         public TextView time;
         public TextView text;
-        public ImageView star;
+        public ImageView alarm;
     }
 }
