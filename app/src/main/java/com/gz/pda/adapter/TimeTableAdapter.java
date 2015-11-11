@@ -60,8 +60,12 @@ public class TimeTableAdapter extends BaseAdapter {
         viewHolder.time.setText(timeTable.getYear()
                 +"-"+timeTable.getMonth()
                 +"-"+timeTable.getDay()
+                +"  "
+                +timeTable.getWeekString()
                 +"   "
-                +timeTable.getTime());
+                +timeTable.getHourString()
+                +":"
+                + timeTable.getMinuteString());
         viewHolder.text.setText(timeTable.getText());
         if (timeTable.isAlarm()){
             viewHolder.alarm.setVisibility(View.VISIBLE);

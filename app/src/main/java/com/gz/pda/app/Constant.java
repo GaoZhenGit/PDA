@@ -9,6 +9,8 @@ public interface Constant {
         public static final String SESS ="sess";
         public static final String EDIT_TYPE = "edit_type";
         public static final String EDTI_DATA = "edit_data";
+
+        public static final String TIMETABLE = "timetable";
     }
     final class Code{
         public static final int NAME_EDIT = 0x231;

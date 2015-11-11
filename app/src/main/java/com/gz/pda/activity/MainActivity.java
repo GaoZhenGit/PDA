@@ -87,7 +87,8 @@ public class MainActivity extends BaseActivity {
         });
         //********************************************************
         aQuery.id(R.id.tv_title_middle).text("个人助理");
-
+        aQuery.id(R.id.img_title_right2).image(R.mipmap.ic_add);
+        aQuery.id(R.id.btn_title_right2).visible();
     }
 
     @Override
