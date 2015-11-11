@@ -1,5 +1,6 @@
 package com.gz.pda.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,6 +14,8 @@ import com.gz.pda.activity.TimeTableActivity;
 import com.gz.pda.adapter.TimeTableAdapter;
 import com.gz.pda.app.Constant;
 import com.gz.pda.datamodel.TimeTable;
+import com.gz.pda.datamodel.User;
+import com.gz.pda.db.DBhelper;
 import com.gz.pda.utils.LogUtil;
 
 import java.util.ArrayList;
@@ -42,29 +45,8 @@ public class TimeTableFragment extends BaseFragment {
     }
 
     @Override
-    void initView() {
-        TimeTable table1 = new TimeTable();
-        table1.setTitle("第一号");
-        table1.setYear(2015);
-        table1.setMonth(11);
-        table1.setDay(11);
-        table1.setHour(16);
-        table1.setMinute(50);
-        table1.setText("今天完成界面了吗今天完成界面了吗今天完成界面了吗今天完成界面了吗" +
-                "今天完成界面了吗今天完成界面了吗今天完成界面了吗今天完成界面了吗" +
-                "今天完成界面了吗今天完成界面了吗今天完成界面了吗今天完成界面了吗");
-
-        TimeTable table2 = new TimeTable();
-        table2.setTitle("第二号");
-        table2.setYear(2015);
-        table2.setMonth(11);
-        table2.setDay(6);
-        table2.setHour(8);
-        table2.setMinute(8);
-        table2.setText("今天完成界面了吗？？？");
-        table2.setAlarm(true);
-        timeTables.add(table1);
-        timeTables.add(table2);
+    public void initView() {
+        getTimeTableFromDB();
         timeTableAdapter.notifyDataSetChanged();
     }
 
@@ -74,11 +56,42 @@ public class TimeTableFragment extends BaseFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Bundle bundle = new Bundle();
-                bundle.putSerializable(Constant.DataKey.TIMETABLE,timeTables.get(position));
+                bundle.putSerializable(Constant.DataKey.TIMETABLE, timeTables.get(position));
                 Intent intent = new Intent(getActivity(), TimeTableActivity.class);
                 intent.putExtras(bundle);
-                startActivity(intent);
+                startActivityForResult(intent, Constant.Code.MODIFY_TIMETABLE);
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != Activity.RESULT_OK) {
+            return;
+        }
+        switch (requestCode) {
+            case Constant.Code.MODIFY_TIMETABLE:
+                //修改日程回调
+                //获得回调timetable数据
+                TimeTable modifiedTimetable = (TimeTable) data.getExtras()
+                        .getSerializable(Constant.DataKey.TIMETABLE);
+                //判断返回的id,修改本页面数据
+                int size = timeTables.size();
+                for (int i = 0; i < size; i++) {
+                    if (timeTables.get(i).getId() == modifiedTimetable.getId()) {
+                        timeTables.set(i, modifiedTimetable);
+                    }
+                }
+                timeTableAdapter.notifyDataSetChanged();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void getTimeTableFromDB(){
+        User user = DBhelper.getInstance().getUserById(1);
+        timeTables.clear();
+        timeTables.addAll(user.getTimeTables());
     }
 }

@@ -1,5 +1,9 @@
 package com.gz.pda.datamodel;
 
+import com.google.gson.annotations.Expose;
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
@@ -8,16 +12,49 @@ import java.util.Date;
  * user time item
  * Created by host on 2015/11/6.
  */
+@DatabaseTable(tableName = "time_table")
 public class TimeTable implements Serializable {
+    @DatabaseField(generatedId = true)
+    @Expose
+    private int id;
+
+    @DatabaseField(columnName = "title")
+    @Expose
     private String title;
+
+    @DatabaseField(columnName = "text")
+    @Expose
     private String text;
+
+    @DatabaseField(columnName = "year")
+    @Expose
     private int year;
+
+    @DatabaseField(columnName = "month")
+    @Expose
     private int month;
+
+    @DatabaseField(columnName = "day")
+    @Expose
     private int day;
+
+    @DatabaseField(columnName = "hour")
+    @Expose
     private int hour;
+
+    @DatabaseField(columnName = "minute")
+    @Expose
     private int minute;
+
+    @DatabaseField(columnName = "alarm")
+    @Expose
     private boolean alarm = false;
+
+    @DatabaseField(columnName = "star")
+    @Expose
     private boolean star;
+
+    @DatabaseField(canBeNull = true, foreign = true, columnName = "user_id")
     private User user;
 
     public void setText(String text) {
@@ -151,5 +188,13 @@ public class TimeTable implements Serializable {
         this.day = calendar.get(Calendar.DATE);
         this.hour = calendar.get(Calendar.HOUR_OF_DAY);
         this.minute = calendar.get(Calendar.MINUTE);
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

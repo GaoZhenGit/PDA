@@ -12,6 +12,7 @@ import com.gz.pda.R;
 import com.gz.pda.activity.EditActivity;
 import com.gz.pda.app.Constant;
 import com.gz.pda.datamodel.User;
+import com.gz.pda.db.DBhelper;
 import com.gz.pda.utils.LogUtil;
 
 /**
@@ -31,11 +32,12 @@ public class UserFragment extends BaseFragment {
 
     @Override
     void fetchData() {
-        user =new User();
-        user.setUsername("xiaoming");
-        user.setPhone("12345678901");
-        user.setDetail("宁静致远");
-        LogUtil.i(gson.toJson(user));
+//        user =new User();
+//        user.setUsername("xiaoming");
+//        user.setPhone("12345678901");
+//        user.setDetail("宁静致远");
+//        LogUtil.i(gson.toJson(user));
+//        DBhelper.getInstance().add(user);
     }
 
     @Override

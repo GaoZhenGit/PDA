@@ -3,6 +3,7 @@ package com.gz.pda.activity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -11,6 +12,10 @@ import android.view.View;
 import com.androidquery.AQuery;
 import com.gz.pda.R;
 import com.gz.pda.adapter.TabPagerAdapter;
+import com.gz.pda.app.Constant;
+import com.gz.pda.datamodel.TimeTable;
+import com.gz.pda.datamodel.User;
+import com.gz.pda.db.DBhelper;
 import com.gz.pda.fragment.CalendarFragment;
 import com.gz.pda.fragment.TimeTableFragment;
 import com.gz.pda.fragment.UserFragment;
@@ -94,6 +99,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void setListener() {
         aQuery.id(R.id.btn_title_left).clicked(this, "onBackPressed");
+        aQuery.id(R.id.btn_title_right2).clicked(this, "createTimetable");
     }
 
     @Override
@@ -119,4 +125,29 @@ public class MainActivity extends BaseActivity {
 
     }
 
+    public void createTimetable() {
+        startActivityForResult(new Intent(this, TimeTableActivity.class), Constant.Code.CREATE_TIMETABLE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode,resultCode,data);
+        if (resultCode != RESULT_OK) {
+            return;
+        }
+        switch (requestCode){
+            case Constant.Code.CREATE_TIMETABLE:
+                //创建日程回调
+                TimeTable createTimetable = (TimeTable) data.getExtras()
+                        .getSerializable(Constant.DataKey.TIMETABLE);
+                User user = new User();
+                user.setId(1);
+                createTimetable.setUser(user);
+                DBhelper.getInstance().add(createTimetable);
+                ((TimeTableFragment)fragments.get(0)).initView();
+                break;
+            default:
+                break;
+        }
+    }
 }

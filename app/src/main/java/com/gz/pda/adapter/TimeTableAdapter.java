@@ -69,6 +69,8 @@ public class TimeTableAdapter extends BaseAdapter {
         viewHolder.text.setText(timeTable.getText());
         if (timeTable.isAlarm()){
             viewHolder.alarm.setVisibility(View.VISIBLE);
+        }else {
+            viewHolder.alarm.setVisibility(View.INVISIBLE);
         }
         return convertView;
     }
