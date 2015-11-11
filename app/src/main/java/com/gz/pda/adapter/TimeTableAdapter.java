@@ -57,10 +57,8 @@ public class TimeTableAdapter extends BaseAdapter {
         }
         TimeTable timeTable = timeTables.get(position);
         viewHolder.title.setText(timeTable.getTitle());
-        viewHolder.time.setText(timeTable.getYear()
-                +"-"+timeTable.getMonth()
-                +"-"+timeTable.getDay()
-                +"  "
+        viewHolder.time.setText(timeTable.getDateString()
+                +"   "
                 +timeTable.getWeekString()
                 +"   "
                 +timeTable.getHourString()

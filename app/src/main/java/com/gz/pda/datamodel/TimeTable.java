@@ -197,4 +197,8 @@ public class TimeTable implements Serializable {
     public void setId(int id) {
         this.id = id;
     }
+
+    public String getDateString() {
+        return year+"-"+month+"-"+day;
+    }
 }

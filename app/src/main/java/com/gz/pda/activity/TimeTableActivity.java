@@ -1,14 +1,19 @@
 package com.gz.pda.activity;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.view.LayoutInflater;
 import android.widget.EditText;
 
 import com.androidquery.AQuery;
 import com.gz.pda.R;
 import com.gz.pda.app.Constant;
 import com.gz.pda.datamodel.TimeTable;
+import com.squareup.timessquare.CalendarPickerView;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -117,7 +122,39 @@ public class TimeTableActivity extends BaseActivity {
 
     //改变日期
     public void editDate() {
+        final CalendarPickerView calendarPickerView
+                = (CalendarPickerView) LayoutInflater.from(this)
+                .inflate(R.layout.calendar_dialog, null, false);
+        AlertDialog alertDialog = new AlertDialog.Builder(this)
+                .setTitle("选择日期")
+                .setView(calendarPickerView)
+                .setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        int hour = timeTable.getHour();
+                        int minute = timeTable.getMinute();
+                        timeTable.setDate(calendarPickerView.getSelectedDate());
+                        timeTable.setHour(hour);
+                        timeTable.setMinute(minute);
+                        aQuery.id(R.id.btn_table_date).text(timeTable.getDateString());
+                    }
+                })
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .create();
+        alertDialog.show();
 
+        //初始化选择日历界面，从今天起3个月的计划
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.add(Calendar.MONTH, 3);
+        calendarPickerView.init(new Date(), calendar.getTime())
+                .inMode(CalendarPickerView.SelectionMode.SINGLE)
+                .withSelectedDate(new Date());
         isModify = true;
     }
 }

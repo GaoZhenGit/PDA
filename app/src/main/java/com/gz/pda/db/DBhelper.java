@@ -107,6 +107,28 @@ public class DBhelper extends OrmLiteSqliteOpenHelper {
         }
     }
 
+    public void update(TimeTable timeTable){
+        try {
+            if (timetableDao == null) {
+                timetableDao = getDao(TimeTable.class);
+            }
+            timetableDao.update(timeTable);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void delete(TimeTable timeTable){
+        try {
+            if (timetableDao == null) {
+                timetableDao = getDao(TimeTable.class);
+            }
+            timetableDao.delete(timeTable);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public Collection<TimeTable> getTimeTableByUser(User user){
         try {
             if (timetableDao == null) {

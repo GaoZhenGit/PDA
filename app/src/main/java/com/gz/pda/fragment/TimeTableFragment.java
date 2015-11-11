@@ -1,6 +1,8 @@
 package com.gz.pda.fragment;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -52,6 +54,7 @@ public class TimeTableFragment extends BaseFragment {
 
     @Override
     void setListener() {
+        //设置点击进入
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -60,6 +63,24 @@ public class TimeTableFragment extends BaseFragment {
                 Intent intent = new Intent(getActivity(), TimeTableActivity.class);
                 intent.putExtras(bundle);
                 startActivityForResult(intent, Constant.Code.MODIFY_TIMETABLE);
+            }
+        });
+        //设置长按删除
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+                String[] items = {"删除"};
+                AlertDialog alertDialog = new AlertDialog.Builder(getContext())
+                        .setItems(items, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                DBhelper.getInstance().delete(timeTables.get(position));
+                                initView();
+                            }
+                        })
+                        .create();
+                alertDialog.show();
+                return true;
             }
         });
     }
@@ -82,6 +103,8 @@ public class TimeTableFragment extends BaseFragment {
                         timeTables.set(i, modifiedTimetable);
                     }
                 }
+                //更新本地数据库
+                DBhelper.getInstance().update(modifiedTimetable);
                 timeTableAdapter.notifyDataSetChanged();
                 break;
             default:
