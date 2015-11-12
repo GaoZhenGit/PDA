@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
+    android:background="@color/defalut"
     android:layout_height="match_parent">
     <com.squareup.timessquare.CalendarPickerView
         android:id="@+id/calendar_view"
@@ -10,12 +11,16 @@
         android:layout_height="0dp"
         android:layout_weight="2"
         android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:paddingBottom="16dp"
-        android:scrollbarStyle="outsideOverlay"
-        android:clipToPadding="false"
         android:background="@color/defalut"
-        />
+        android:clipToPadding="false"
+        android:paddingBottom="16dp"
+        android:paddingRight="16dp"
+        android:scrollbarStyle="outsideOverlay" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/black"
+        android:layout_margin="@dimen/margin_left"/>
     <ListView
         android:id="@+id/listview"
         android:layout_width="match_parent"

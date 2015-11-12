@@ -27,8 +27,6 @@ public class User implements Serializable{
     @Expose
     private String username;
 
-    private String password;
-
     @DatabaseField(columnName = "detail")
     @Expose
     private String detail;
@@ -43,14 +41,6 @@ public class User implements Serializable{
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getPhone() {

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.view.LayoutInflater;
 import android.widget.EditText;
+import android.widget.TimePicker;
 
 import com.androidquery.AQuery;
 import com.gz.pda.R;
@@ -79,6 +80,7 @@ public class TimeTableActivity extends BaseActivity {
         aQuery.id(R.id.btn_title_right2).clicked(this, "enableEdit");
         aQuery.id(R.id.cb_alarm).clicked(this, "editAlarm");
         aQuery.id(R.id.btn_table_date).clicked(this, "editDate");
+        aQuery.id(R.id.btn_table_time).clicked(this, "editTime");
     }
 
     public void confirm() {
@@ -152,6 +154,33 @@ public class TimeTableActivity extends BaseActivity {
         calendarPickerView.init(new Date(), calendar.getTime())
                 .inMode(CalendarPickerView.SelectionMode.SINGLE)
                 .withSelectedDate(new Date());
+        isModify = true;
+    }
+
+    public void editTime() {
+        final TimePicker timePicker = new TimePicker(this);
+        timePicker.setIs24HourView(true);
+        timePicker.setCurrentHour(timeTable.getHour());
+        timePicker.setCurrentMinute(timeTable.getMinute());
+        AlertDialog alertDialog = new AlertDialog.Builder(this)
+                .setTitle("选择时间")
+                .setView(timePicker)
+                .setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        timeTable.setHour(timePicker.getCurrentHour());
+                        timeTable.setMinute(timePicker.getCurrentMinute());
+                        aQuery.id(R.id.btn_table_time).text(timeTable.getHourString()
+                                +":"+timeTable.getMinuteString());
+                    }
+                })
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }).create();
+        alertDialog.show();
         isModify = true;
     }
 }
