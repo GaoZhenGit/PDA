@@ -63,7 +63,9 @@ public abstract class BaseTimetableFragment extends BaseFragment {
                         .setItems(items, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                //数据库中删除
                                 DBhelper.getInstance().delete(timeTables.get(position));
+                                //通知所有timetable list页面更新
                                 Activity mainActivity = getActivity();
                                 if(mainActivity instanceof MainActivity){
                                     ((MainActivity)mainActivity).fragmentInitView();
