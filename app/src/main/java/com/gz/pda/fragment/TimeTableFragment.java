@@ -53,7 +53,7 @@ public class TimeTableFragment extends BaseTimetableFragment {
     }
 
     private void getTimeTableFromDB(){
-        User user = DBhelper.getInstance().getUserById(1);
+        User user = DBhelper.getInstance().getFirstUser();
         timeTables.clear();
         timeTables.addAll(user.getTimeTables());
         Collections.sort(timeTables);

@@ -1,5 +1,7 @@
 package com.gz.pda.activity;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.text.InputType;
 import android.widget.EditText;
 
@@ -72,6 +74,14 @@ public class EditActivity extends BaseActivity {
 
     public void confirm(){
         //确定修改
+        String confirmData = modifyData.getText().toString();
+        if(confirmData.length()==0){
+            toast("请输入完整信息");
+            return;
+        }
+        Intent intent = new Intent();
+        intent.putExtra(Constant.DataKey.EDTI_DATA,confirmData);
+        setResult(RESULT_OK,intent);
         finish();
     }
 }

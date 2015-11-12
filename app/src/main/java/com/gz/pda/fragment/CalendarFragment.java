@@ -67,7 +67,7 @@ public class CalendarFragment extends BaseTimetableFragment {
     }
 
     private void getTimeTableFromDbByDate(Date date){
-        User user = DBhelper.getInstance().getUserById(1);
+        User user = DBhelper.getInstance().getFirstUser();
         TimeTable selectTimeTable = new TimeTable();
         selectTimeTable.setDate(date);
         timeTables.clear();

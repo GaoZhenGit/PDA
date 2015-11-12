@@ -54,7 +54,7 @@ public class TimeTable implements Serializable, Comparable<TimeTable> {
     @Expose
     private boolean star;
 
-    @DatabaseField(canBeNull = true, foreign = true, columnName = "user_id")
+    @DatabaseField(canBeNull = true, foreign = true, columnName = "user_phone")
     private User user;
 
     public void setText(String text) {

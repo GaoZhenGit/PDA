@@ -1,5 +1,6 @@
 package com.gz.pda.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -34,12 +35,12 @@ public class UserFragment extends BaseFragment {
 
     @Override
     void fetchData() {
-        user = DBhelper.getInstance().getUserById(1);
         aQuery = new AQuery(convertView);
     }
 
     @Override
     public void initView() {
+        user = DBhelper.getInstance().getFirstUser();
         aQuery.id(R.id.mdf_name).text(user.getUsername());
         aQuery.id(R.id.mdf_phone).text(user.getPhone());
         aQuery.id(R.id.mdf_detail).text(user.getDetail());
@@ -85,5 +86,27 @@ public class UserFragment extends BaseFragment {
                 startActivityForResult(intent, Constant.Code.PASSWORD_EDIT);
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode != Activity.RESULT_OK){
+            return;
+        }
+        User user = DBhelper.getInstance().getFirstUser();
+        switch (requestCode){
+            case Constant.Code.NAME_EDIT:
+                user.setUsername(data.getStringExtra(Constant.DataKey.EDTI_DATA));
+                DBhelper.getInstance().update(user);
+                initView();
+                break;
+            case Constant.Code.DETAIL_EDIT:
+                user.setDetail(data.getStringExtra(Constant.DataKey.EDTI_DATA));
+                DBhelper.getInstance().update(user);
+                initView();
+                break;
+            case Constant.Code.PASSWORD_EDIT:
+                break;
+        }
     }
 }

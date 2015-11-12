@@ -15,11 +15,8 @@ import java.util.List;
  */
 @DatabaseTable(tableName = "user")
 public class User implements Serializable{
-    @DatabaseField(columnName = "id",generatedId = true)
-    @Expose
-    private int id;
 
-    @DatabaseField(columnName = "phone")
+    @DatabaseField(columnName = "phone",id = true)
     @Expose
     private String phone;
 
@@ -34,6 +31,8 @@ public class User implements Serializable{
     @ForeignCollectionField(columnName="timetable")
     @Expose
     private Collection<TimeTable> timeTables;
+
+    private String password;
 
     public String getUsername() {
         return username;
@@ -67,11 +66,11 @@ public class User implements Serializable{
         this.timeTables = timeTables;
     }
 
-    public int getId() {
-        return id;
+    public String getPassword() {
+        return password;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

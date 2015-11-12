@@ -141,8 +141,7 @@ public class MainActivity extends BaseActivity {
                 //创建日程回调
                 TimeTable createTimetable = (TimeTable) data.getExtras()
                         .getSerializable(Constant.DataKey.TIMETABLE);
-                User user = new User();
-                user.setId(1);
+                User user = DBhelper.getInstance().getFirstUser();
                 createTimetable.setUser(user);
                 DBhelper.getInstance().add(createTimetable);
                 fragmentInitView();

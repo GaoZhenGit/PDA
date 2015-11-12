@@ -7,14 +7,20 @@ import com.gz.pda.datamodel.TimeTable;
 import com.gz.pda.datamodel.User;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
+import com.j256.ormlite.stmt.StatementBuilder;
+import com.j256.ormlite.support.CompiledStatement;
 import com.j256.ormlite.support.ConnectionSource;
+import com.j256.ormlite.support.DatabaseConnection;
+import com.j256.ormlite.support.DatabaseResults;
 import com.j256.ormlite.table.TableUtils;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -96,6 +102,23 @@ public class DBhelper extends OrmLiteSqliteOpenHelper {
         return user;
     }
 
+    public User getFirstUser(){
+        User user = null;
+        try {
+            if (userDao == null) {
+                userDao = getDao(User.class);
+            }
+            List<User> users = userDao.queryForAll();
+            if(users==null||users.size()==0){
+                return null;
+            }
+            user = users.get(0);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return user;
+    }
+
     public void add(TimeTable timeTable) {
         try {
             if (timetableDao == null) {
@@ -118,6 +141,17 @@ public class DBhelper extends OrmLiteSqliteOpenHelper {
         }
     }
 
+    public void update(User user){
+        try {
+            if (userDao == null) {
+                userDao = getDao(User.class);
+            }
+            userDao.update(user);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void delete(TimeTable timeTable){
         try {
             if (timetableDao == null) {
@@ -135,7 +169,7 @@ public class DBhelper extends OrmLiteSqliteOpenHelper {
                 timetableDao = getDao(TimeTable.class);
             }
             Map<String,Object> q = new HashMap<>();
-            q.put("user_id", user.getId() + "");
+            q.put("user_phone", user.getPhone() + "");
             return timetableDao.queryForFieldValues(q);
         } catch (SQLException e) {
             e.printStackTrace();
