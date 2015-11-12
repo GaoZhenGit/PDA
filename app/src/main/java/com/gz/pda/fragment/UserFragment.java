@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.androidquery.AQuery;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.gz.pda.R;
@@ -22,27 +23,27 @@ import com.gz.pda.utils.LogUtil;
  * Created by host on 2015/11/5.
  */
 public class UserFragment extends BaseFragment {
-    private Gson gson;
     private User user;
+    private Gson gson;
+    private AQuery aQuery;
     @Override
     void setConvertView(LayoutInflater inflater, ViewGroup container) {
         convertView = inflater.inflate(R.layout.fragment_user, container, false);
-        gson =new GsonBuilder().disableHtmlEscaping().create();
+        gson = new GsonBuilder().disableHtmlEscaping().excludeFieldsWithoutExposeAnnotation().create();
     }
 
     @Override
     void fetchData() {
-//        user =new User();
-//        user.setUsername("xiaoming");
-//        user.setPhone("12345678901");
-//        user.setDetail("宁静致远");
-//        LogUtil.i(gson.toJson(user));
-//        DBhelper.getInstance().add(user);
+        user = DBhelper.getInstance().getUserById(1);
+        aQuery = new AQuery(convertView);
     }
 
     @Override
-    void initView() {
-
+    public void initView() {
+        aQuery.id(R.id.mdf_name).text(user.getUsername());
+        aQuery.id(R.id.mdf_phone).text(user.getPhone());
+        aQuery.id(R.id.mdf_detail).text(user.getDetail());
+        LogUtil.i(gson.toJson(user));
     }
 
     @Override

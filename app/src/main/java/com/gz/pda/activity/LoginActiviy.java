@@ -4,6 +4,8 @@ import android.content.Intent;
 
 import com.androidquery.AQuery;
 import com.gz.pda.R;
+import com.gz.pda.datamodel.User;
+import com.gz.pda.db.DBhelper;
 
 /**
  * for login
@@ -35,7 +37,13 @@ public class LoginActiviy extends BaseActivity {
     }
 
     public void login(){
-        startActivity(new Intent(this,MainActivity.class));
+        User user = new User();
+        user.setPhone("1362847209");
+        user.setUsername("Jack Ma");
+        user.setDetail("the world is mine");
+        user.setId(1);
+        DBhelper.getInstance().add(user);
+        startActivity(new Intent(this, MainActivity.class));
         finish();
     }
 }

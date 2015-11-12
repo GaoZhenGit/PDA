@@ -67,10 +67,7 @@ public class TimeTableActivity extends BaseActivity {
             aQuery.id(R.id.timetable_title).text(timeTable.getTitle());
             aQuery.id(R.id.timetable_text).text(timeTable.getText());
         }
-        aQuery.id(R.id.btn_table_date).text(
-                timeTable.getYear() + "-"
-                        + timeTable.getMonth() + "-"
-                        + timeTable.getDay());
+        aQuery.id(R.id.btn_table_date).text(timeTable.getDateString());
         aQuery.id(R.id.btn_table_time).text(timeTable.getHourString() + ":" + timeTable.getMinuteString());
         aQuery.id(R.id.cb_alarm).checked(timeTable.isAlarm());
     }

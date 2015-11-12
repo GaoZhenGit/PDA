@@ -16,6 +16,7 @@ import com.gz.pda.app.Constant;
 import com.gz.pda.datamodel.TimeTable;
 import com.gz.pda.datamodel.User;
 import com.gz.pda.db.DBhelper;
+import com.gz.pda.fragment.BaseFragment;
 import com.gz.pda.fragment.CalendarFragment;
 import com.gz.pda.fragment.TimeTableFragment;
 import com.gz.pda.fragment.UserFragment;
@@ -131,11 +132,11 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode,resultCode,data);
+        super.onActivityResult(requestCode, resultCode, data);
         if (resultCode != RESULT_OK) {
             return;
         }
-        switch (requestCode){
+        switch (requestCode) {
             case Constant.Code.CREATE_TIMETABLE:
                 //创建日程回调
                 TimeTable createTimetable = (TimeTable) data.getExtras()
@@ -144,10 +145,18 @@ public class MainActivity extends BaseActivity {
                 user.setId(1);
                 createTimetable.setUser(user);
                 DBhelper.getInstance().add(createTimetable);
-                ((TimeTableFragment)fragments.get(0)).initView();
+                fragmentInitView();
                 break;
             default:
                 break;
+        }
+    }
+
+    public void fragmentInitView() {
+        if (fragments.get(0) instanceof BaseFragment
+                && fragments.get(1) instanceof BaseFragment) {
+            ((BaseFragment) fragments.get(0)).initView();
+            ((BaseFragment) fragments.get(1)).initView();
         }
     }
 }

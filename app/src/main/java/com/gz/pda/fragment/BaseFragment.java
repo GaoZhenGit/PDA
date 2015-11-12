@@ -29,7 +29,7 @@ public abstract class BaseFragment extends Fragment {
     //获取数据
     abstract void fetchData();
     //页面细节初始化
-    abstract void initView();
+    public abstract void initView();
     //设置监听器
     abstract void setListener();
 

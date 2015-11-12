@@ -13,7 +13,7 @@ import java.util.Date;
  * Created by host on 2015/11/6.
  */
 @DatabaseTable(tableName = "time_table")
-public class TimeTable implements Serializable {
+public class TimeTable implements Serializable, Comparable<TimeTable> {
     @DatabaseField(generatedId = true)
     @Expose
     private int id;
@@ -199,6 +199,45 @@ public class TimeTable implements Serializable {
     }
 
     public String getDateString() {
-        return year+"-"+month+"-"+day;
+        return year + "-" + month + "-" + day;
+    }
+
+    @Override
+    public int compareTo(TimeTable another) {
+        if (this.year < another.year) {
+            return -1;
+        }
+        if (this.year > another.year) {
+            return 1;
+        }
+
+        if (this.month < another.month) {
+            return -1;
+        }
+        if (this.month > another.month) {
+            return 1;
+        }
+
+        if (this.day < another.day) {
+            return -1;
+        }
+        if (this.day > another.day) {
+            return 1;
+        }
+
+        if (this.hour < another.hour) {
+            return -1;
+        }
+        if (this.hour > another.hour) {
+            return 1;
+        }
+
+        if (this.minute < another.minute) {
+            return -1;
+        }
+        if (this.minute > another.minute) {
+            return 1;
+        }
+        return -1;
     }
 }
