@@ -1,12 +1,15 @@
 package com.gz.pda.activity;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.hardware.input.InputManager;
 import android.os.Bundle;
 import android.text.Editable;
 import android.view.LayoutInflater;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TimePicker;
 
@@ -110,6 +113,9 @@ public class TimeTableActivity extends BaseActivity {
         title.requestFocus();
         text.setFocusableInTouchMode(true);
         text.setFocusable(true);
+        InputMethodManager inputManager =
+                (InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputManager.showSoftInput(title, 0);
         isModify = true;
     }
 

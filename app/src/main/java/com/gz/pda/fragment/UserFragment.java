@@ -12,10 +12,15 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.gz.pda.R;
 import com.gz.pda.activity.EditActivity;
+import com.gz.pda.activity.LoginActivity;
 import com.gz.pda.app.Constant;
+import com.gz.pda.datamodel.TimeTable;
 import com.gz.pda.datamodel.User;
 import com.gz.pda.db.DBhelper;
 import com.gz.pda.utils.LogUtil;
+import com.j256.ormlite.table.TableUtils;
+
+import java.io.File;
 
 /**
  * user page
@@ -27,6 +32,7 @@ public class UserFragment extends BaseFragment {
     private User user;
     private Gson gson;
     private AQuery aQuery;
+
     @Override
     void setConvertView(LayoutInflater inflater, ViewGroup container) {
         convertView = inflater.inflate(R.layout.fragment_user, container, false);
@@ -53,10 +59,10 @@ public class UserFragment extends BaseFragment {
         nameModify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle =new Bundle();
+                Bundle bundle = new Bundle();
                 bundle.putInt(Constant.DataKey.EDIT_TYPE, Constant.Code.NAME_EDIT);
-                bundle.putString(Constant.DataKey.EDTI_DATA,user.getUsername());
-                Intent intent =new Intent(getActivity(), EditActivity.class);
+                bundle.putString(Constant.DataKey.EDTI_DATA, user.getUsername());
+                Intent intent = new Intent(getActivity(), EditActivity.class);
                 intent.putExtras(bundle);
                 startActivityForResult(intent, Constant.Code.NAME_EDIT);
             }
@@ -66,10 +72,10 @@ public class UserFragment extends BaseFragment {
         detailModify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle =new Bundle();
+                Bundle bundle = new Bundle();
                 bundle.putInt(Constant.DataKey.EDIT_TYPE, Constant.Code.DETAIL_EDIT);
-                bundle.putString(Constant.DataKey.EDTI_DATA,user.getDetail());
-                Intent intent =new Intent(getActivity(), EditActivity.class);
+                bundle.putString(Constant.DataKey.EDTI_DATA, user.getDetail());
+                Intent intent = new Intent(getActivity(), EditActivity.class);
                 intent.putExtras(bundle);
                 startActivityForResult(intent, Constant.Code.DETAIL_EDIT);
             }
@@ -79,22 +85,33 @@ public class UserFragment extends BaseFragment {
         passwordModify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle =new Bundle();
+                Bundle bundle = new Bundle();
                 bundle.putInt(Constant.DataKey.EDIT_TYPE, Constant.Code.PASSWORD_EDIT);
-                Intent intent =new Intent(getActivity(), EditActivity.class);
+                Intent intent = new Intent(getActivity(), EditActivity.class);
                 intent.putExtras(bundle);
                 startActivityForResult(intent, Constant.Code.PASSWORD_EDIT);
+            }
+        });
+
+        View logoff = findView(R.id.btn_mdf_logoff);
+        logoff.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //清除数据库
+                DBhelper.getInstance().drop();
+                getActivity().finish();
+                startActivity(new Intent(getContext(), LoginActivity.class));
             }
         });
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode != Activity.RESULT_OK){
+        if (resultCode != Activity.RESULT_OK) {
             return;
         }
         User user = DBhelper.getInstance().getFirstUser();
-        switch (requestCode){
+        switch (requestCode) {
             case Constant.Code.NAME_EDIT:
                 user.setUsername(data.getStringExtra(Constant.DataKey.EDTI_DATA));
                 DBhelper.getInstance().update(user);

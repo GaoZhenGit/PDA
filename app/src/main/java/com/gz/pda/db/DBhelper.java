@@ -29,7 +29,7 @@ import java.util.Map;
  */
 public class DBhelper extends OrmLiteSqliteOpenHelper {
     // 数据库名称
-    private static final String DATABASE_NAME = "pda.db";
+    public static final String DATABASE_NAME = "pda.db";
     // 数据库version
     private static final int DATABASE_VERSION = 1;
 
@@ -43,7 +43,7 @@ public class DBhelper extends OrmLiteSqliteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-    public static synchronized void init(Context context){
+    public static synchronized void init(Context context) {
         instance = new DBhelper(context);
     }
 
@@ -102,14 +102,14 @@ public class DBhelper extends OrmLiteSqliteOpenHelper {
         return user;
     }
 
-    public User getFirstUser(){
+    public User getFirstUser() {
         User user = null;
         try {
             if (userDao == null) {
                 userDao = getDao(User.class);
             }
             List<User> users = userDao.queryForAll();
-            if(users==null||users.size()==0){
+            if (users == null || users.size() == 0) {
                 return null;
             }
             user = users.get(0);
@@ -130,7 +130,7 @@ public class DBhelper extends OrmLiteSqliteOpenHelper {
         }
     }
 
-    public void update(TimeTable timeTable){
+    public void update(TimeTable timeTable) {
         try {
             if (timetableDao == null) {
                 timetableDao = getDao(TimeTable.class);
@@ -141,7 +141,7 @@ public class DBhelper extends OrmLiteSqliteOpenHelper {
         }
     }
 
-    public void update(User user){
+    public void update(User user) {
         try {
             if (userDao == null) {
                 userDao = getDao(User.class);
@@ -152,7 +152,7 @@ public class DBhelper extends OrmLiteSqliteOpenHelper {
         }
     }
 
-    public void delete(TimeTable timeTable){
+    public void delete(TimeTable timeTable) {
         try {
             if (timetableDao == null) {
                 timetableDao = getDao(TimeTable.class);
@@ -163,18 +163,34 @@ public class DBhelper extends OrmLiteSqliteOpenHelper {
         }
     }
 
-    public Collection<TimeTable> getTimeTableByUser(User user){
+    public Collection<TimeTable> getTimeTableByUser(User user) {
         try {
             if (timetableDao == null) {
                 timetableDao = getDao(TimeTable.class);
             }
-            Map<String,Object> q = new HashMap<>();
+            Map<String, Object> q = new HashMap<>();
             q.put("user_phone", user.getPhone() + "");
             return timetableDao.queryForFieldValues(q);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return new ArrayList<>();
+    }
+
+    public void drop(){
+        try {
+            if (timetableDao == null) {
+                timetableDao = getDao(TimeTable.class);
+            }
+            timetableDao.delete(getFirstUser().getTimeTables());
+
+            if (userDao == null) {
+                userDao = getDao(User.class);
+            }
+            userDao.delete(getFirstUser());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 }
