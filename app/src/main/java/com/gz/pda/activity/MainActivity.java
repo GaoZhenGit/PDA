@@ -12,6 +12,7 @@ import android.view.View;
 import com.androidquery.AQuery;
 import com.gz.pda.R;
 import com.gz.pda.adapter.TabPagerAdapter;
+import com.gz.pda.alarm.AlarmHelper;
 import com.gz.pda.app.Constant;
 import com.gz.pda.datamodel.TimeTable;
 import com.gz.pda.datamodel.User;
@@ -21,9 +22,11 @@ import com.gz.pda.fragment.CalendarFragment;
 import com.gz.pda.fragment.TimeTableFragment;
 import com.gz.pda.fragment.UserFragment;
 import com.gz.pda.listener.OnTabSelectedListener;
+import com.gz.pda.utils.LogUtil;
 import com.gz.pda.view.PagerTabWidget;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -101,6 +104,7 @@ public class MainActivity extends BaseActivity {
     protected void setListener() {
         aQuery.id(R.id.btn_title_left).clicked(this, "onBackPressed");
         aQuery.id(R.id.btn_title_right2).clicked(this, "createTimetable");
+        aQuery.id(R.id.btn_title_right).clicked(this, "search");
     }
 
     @Override
@@ -142,8 +146,9 @@ public class MainActivity extends BaseActivity {
                 TimeTable createTimetable = (TimeTable) data.getExtras()
                         .getSerializable(Constant.DataKey.TIMETABLE);
                 User user = DBhelper.getInstance().getFirstUser();
-                createTimetable.setUser(user);
-                DBhelper.getInstance().add(createTimetable);
+                createTimetable.setUser(user);//设置本用户使用
+                DBhelper.getInstance().add(createTimetable);//添加到本地数据库
+                AlarmHelper.getInstance().add(createTimetable);//添加到闹钟队列，自动判断是否响铃
                 fragmentInitView();
                 break;
             default:
@@ -157,5 +162,8 @@ public class MainActivity extends BaseActivity {
             ((BaseFragment) fragments.get(0)).initView();
             ((BaseFragment) fragments.get(1)).initView();
         }
+    }
+
+    public void search() {
     }
 }

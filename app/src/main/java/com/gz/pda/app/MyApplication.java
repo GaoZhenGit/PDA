@@ -3,6 +3,7 @@ package com.gz.pda.app;
 import android.app.Application;
 
 import com.gz.pda.Network.Net;
+import com.gz.pda.alarm.AlarmHelper;
 import com.gz.pda.db.DBhelper;
 
 /**
@@ -15,5 +16,6 @@ public class MyApplication extends Application {
         super.onCreate();
         Net.init(this);
         DBhelper.init(this);
+        AlarmHelper.init(this);
     }
 }

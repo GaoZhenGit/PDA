@@ -12,7 +12,7 @@ import com.gz.pda.db.DBhelper;
  * for login
  * Created by host on 2015/11/7.
  */
-public class LoginActiviy extends BaseActivity {
+public class LoginActivity extends BaseActivity {
     AQuery aQuery;
     private EditText phone;
     private EditText password;

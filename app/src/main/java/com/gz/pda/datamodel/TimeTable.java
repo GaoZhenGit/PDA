@@ -1,5 +1,7 @@
 package com.gz.pda.datamodel;
 
+import android.support.annotation.NonNull;
+
 import com.google.gson.annotations.Expose;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
@@ -190,6 +192,12 @@ public class TimeTable implements Serializable, Comparable<TimeTable> {
         this.minute = calendar.get(Calendar.MINUTE);
     }
 
+    public Date getDate(){
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year,month-1,day,hour,minute);
+        return calendar.getTime();
+    }
+
     public int getId() {
         return id;
     }
@@ -203,7 +211,7 @@ public class TimeTable implements Serializable, Comparable<TimeTable> {
     }
 
     @Override
-    public int compareTo(TimeTable another) {
+    public int compareTo(@NonNull TimeTable another) {
         if (this.year < another.year) {
             return -1;
         }

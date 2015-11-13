@@ -13,6 +13,7 @@ import com.gz.pda.R;
 import com.gz.pda.activity.MainActivity;
 import com.gz.pda.activity.TimeTableActivity;
 import com.gz.pda.adapter.TimeTableAdapter;
+import com.gz.pda.alarm.AlarmHelper;
 import com.gz.pda.app.Constant;
 import com.gz.pda.datamodel.TimeTable;
 import com.gz.pda.db.DBhelper;
@@ -65,6 +66,8 @@ public abstract class BaseTimetableFragment extends BaseFragment {
                             public void onClick(DialogInterface dialog, int which) {
                                 //数据库中删除
                                 DBhelper.getInstance().delete(timeTables.get(position));
+                                //闹钟队列中删除
+                                AlarmHelper.getInstance().cancel(timeTables.get(position));
                                 //通知所有timetable list页面更新
                                 Activity mainActivity = getActivity();
                                 if(mainActivity instanceof MainActivity){
@@ -102,6 +105,8 @@ public abstract class BaseTimetableFragment extends BaseFragment {
                 }
                 //更新本地数据库
                 DBhelper.getInstance().update(modifiedTimetable);
+                //更新闹钟队列
+                AlarmHelper.getInstance().update(modifiedTimetable);
                 //通知所有timetable list页面更新
                 Activity mainActivity = getActivity();
                 if(mainActivity instanceof MainActivity){
