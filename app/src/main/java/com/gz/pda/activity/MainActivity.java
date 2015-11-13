@@ -151,6 +151,10 @@ public class MainActivity extends BaseActivity {
                 AlarmHelper.getInstance().add(createTimetable);//添加到闹钟队列，自动判断是否响铃
                 fragmentInitView();
                 break;
+            case Constant.Code.SEARCH:
+                //搜索页面返回后刷新界面
+                fragmentInitView();
+                break;
             default:
                 break;
         }
@@ -165,5 +169,6 @@ public class MainActivity extends BaseActivity {
     }
 
     public void search() {
+        startActivityForResult(new Intent(this, SearchActivity.class), Constant.Code.SEARCH);
     }
 }

@@ -9,14 +9,8 @@ import android.os.Bundle;
 
 import com.gz.pda.app.Constant;
 import com.gz.pda.datamodel.TimeTable;
-import com.gz.pda.utils.LogUtil;
-
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
 
 /**
  * single instance class of alarmqueue
@@ -25,10 +19,8 @@ import java.util.Queue;
 public class AlarmHelper {
     private Context context;
     private static AlarmHelper instance;
-    private Queue<TimeTable> alarmQueue;
 
     private AlarmHelper(Context context) {
-        alarmQueue = new LinkedList<>();
         this.context = context;
     }
 

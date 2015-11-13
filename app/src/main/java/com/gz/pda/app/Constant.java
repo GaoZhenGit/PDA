@@ -19,5 +19,6 @@ public interface Constant {
         public static final int PASSWORD_EDIT = 0x233;
         public static final int CREATE_TIMETABLE = 0x234;
         public static final int MODIFY_TIMETABLE = 0x235;
+        public static final int SEARCH = 0x236;
     }
 }
