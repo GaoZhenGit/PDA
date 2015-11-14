@@ -21,4 +21,10 @@ public interface Constant {
         public static final int MODIFY_TIMETABLE = 0x235;
         public static final int SEARCH = 0x236;
     }
+
+    final class URL{
+        public static final String Server ="192.168.1.105";
+        public static final String Register = "http://"+Server+"/PDA/index.php/Home/Index/register";
+        public static final String Login = "http://"+Server+"/PDA/index.php/Home/Index/login";
+    }
 }

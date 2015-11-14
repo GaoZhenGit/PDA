@@ -8,6 +8,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.gz.pda.app.Constant;
 import com.gz.pda.utils.LogUtil;
 
 import java.util.Map;
@@ -59,6 +60,29 @@ public class Net {
         mQueue.add(stringRequest);
     }
 
+    public static void login(final Map<String, String> params, final NetworkListener networkListener) {
+        StringRequest stringRequest = new CookieStoreRequest(Request.Method.POST, Net.context, Constant.URL.Login,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        LogUtil.i("volley", "response -> " + response);
+                        networkListener.onSuccess(response);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                LogUtil.i("volley error", error.getMessage() + "");
+                networkListener.onFail(error.getMessage());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                //在这里设置需要post的参数
+                return params;
+            }
+        };
+        mQueue.add(stringRequest);
+    }
 
 
     public interface NetworkListener {

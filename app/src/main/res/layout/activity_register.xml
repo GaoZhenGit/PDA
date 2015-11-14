@@ -16,21 +16,19 @@
         android:background="@color/defalut">
 
         <EditText
-            android:id="@+id/register_name_et"
+            android:id="@+id/register_phone_et"
             android:layout_width="fill_parent"
             android:layout_height="@dimen/button_height"
             android:background="@color/defalut"
-            android:hint="昵称"
+            android:hint="手机号"
             android:maxLength="11"
             android:numeric="integer" />
-
         <ImageView
             android:layout_width="@dimen/drawer_img_edge"
             android:layout_height="@dimen/drawer_img_edge"
             android:layout_alignParentRight="true"
             android:layout_marginTop="@dimen/margin_top"
-            android:src="@mipmap/ic_user_grey"/>
-
+            android:src="@mipmap/ic_phone"/>
     </RelativeLayout>
 
     <View
@@ -49,19 +47,20 @@
         android:background="@color/defalut">
 
         <EditText
-            android:id="@+id/register_phone_et"
+            android:id="@+id/register_name_et"
             android:layout_width="fill_parent"
             android:layout_height="@dimen/button_height"
             android:background="@color/defalut"
-            android:hint="手机号"
-            android:maxLength="11"
-            android:numeric="integer" />
+            android:hint="用户名"
+            android:maxLength="11" />
+
         <ImageView
             android:layout_width="@dimen/drawer_img_edge"
             android:layout_height="@dimen/drawer_img_edge"
             android:layout_alignParentRight="true"
             android:layout_marginTop="@dimen/margin_top"
-            android:src="@mipmap/ic_phone"/>
+            android:src="@mipmap/ic_user_grey"/>
+
     </RelativeLayout>
 
     <View
@@ -103,7 +102,7 @@
         android:background="@color/color_theme" />
 
     <Button
-        android:id="@+id/login_btn"
+        android:id="@+id/register_btn"
         android:layout_width="fill_parent"
         android:layout_height="@dimen/button_height"
         android:layout_marginLeft="@dimen/margin_left"
