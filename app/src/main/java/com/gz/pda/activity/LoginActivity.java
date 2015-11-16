@@ -7,6 +7,7 @@ import com.androidquery.AQuery;
 import com.google.gson.Gson;
 import com.gz.pda.Network.Net;
 import com.gz.pda.R;
+import com.gz.pda.alarm.AlarmHelper;
 import com.gz.pda.datamodel.TimeTable;
 import com.gz.pda.datamodel.User;
 import com.gz.pda.db.DBhelper;
@@ -61,7 +62,7 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void setListener() {
         aQuery.id(R.id.btn_title_left).clicked(this, "onBackPressed");
-        aQuery.id(R.id.login_btn).clicked(this, "login");
+        aQuery.id(R.id.login_btn).clicked(this, "login2");
         aQuery.id(R.id.btn_title_right).clicked(this, "register");
     }
 
@@ -81,8 +82,10 @@ public class LoginActivity extends BaseActivity {
         //转换gson格式
         gson = new Gson();
         String data = gson.toJson(user);
-        Map<String ,String > param = new HashMap<>();
-        param.put("data",data);
+        Map<String, String> param = new HashMap<>();
+//        param.put("username", user.getUsername());
+//        param.put("password", user.getPassword());
+        param.put("data",gson.toJson(user));
         //发起网络请求
         Net.login(param, new Net.NetworkListener() {
             @Override
@@ -90,18 +93,21 @@ public class LoginActivity extends BaseActivity {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     //判断json中登录状态
-                    if ("success".equals(jsonObject.optString("state"))) {
+                    if (jsonObject.optInt("state") == 1) {
                         //解读user
-                        User user = gson.fromJson(jsonObject.optString("user"),User.class);
+                        User user = gson.fromJson(jsonObject.optString("user"), User.class);
                         //将用户写入数据库
                         DBhelper.getInstance().add(user);
-                        //将timetable全部关联用户写入数据库
-                        for(TimeTable timeTable:user.getTimeTables()){
-                            timeTable.setUser(user);
-                            DBhelper.getInstance().add(timeTable);
+                        //将timetable全部关联用户写入数据库，闹铃队列
+                        if (user.getTimeTables() != null) {
+                            for (TimeTable timeTable : user.getTimeTables()) {
+                                timeTable.setUser(user);
+                                DBhelper.getInstance().add(timeTable);
+                                AlarmHelper.getInstance().add(timeTable);
+                            }
                         }
                         toast("登录成功");
-                        startActivity(new Intent(getBaseContext(),MainActivity.class));
+                        startActivity(new Intent(getBaseContext(), MainActivity.class));
                         finish();
                     } else {
                         toast("登录失败" + jsonObject.optString("reason"));
@@ -119,7 +125,7 @@ public class LoginActivity extends BaseActivity {
         });
     }
 
-    public void login2(){
+    public void login2() {
         User user = new User();
         user.setUsername("test");
         user.setPhone("13622847209");

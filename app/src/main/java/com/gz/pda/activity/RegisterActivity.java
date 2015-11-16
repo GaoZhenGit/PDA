@@ -80,7 +80,7 @@ public class RegisterActivity extends BaseActivity {
             public void onSuccess(String response) {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
-                    if ("success".equals(jsonObject.optString("state"))) {
+                    if (jsonObject.optInt("state") == 0) {
                         toast("注册成功");
                         finish();
                     } else {

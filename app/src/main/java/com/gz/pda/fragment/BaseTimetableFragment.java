@@ -9,6 +9,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.gz.pda.Network.Net;
 import com.gz.pda.R;
 import com.gz.pda.activity.MainActivity;
 import com.gz.pda.activity.TimeTableActivity;
@@ -17,9 +20,15 @@ import com.gz.pda.alarm.AlarmHelper;
 import com.gz.pda.app.Constant;
 import com.gz.pda.datamodel.TimeTable;
 import com.gz.pda.db.DBhelper;
+import com.gz.pda.utils.LogUtil;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * the fragment that contain timetable listview
@@ -73,6 +82,8 @@ public abstract class BaseTimetableFragment extends BaseFragment {
                                 if(mainActivity instanceof MainActivity){
                                     ((MainActivity)mainActivity).fragmentInitView();
                                 }
+                                //远程删除
+                                remoteDelete(timeTables.get(position).getId());
                             }
                         })
                         .create();
@@ -112,9 +123,62 @@ public abstract class BaseTimetableFragment extends BaseFragment {
                 if(mainActivity instanceof MainActivity){
                     ((MainActivity)mainActivity).fragmentInitView();
                 }
+                //远程更新
+                remoteUpdate(modifiedTimetable);
                 break;
             default:
                 break;
         }
+    }
+
+    private void remoteUpdate(final TimeTable modifiedTimetable) {
+        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+        String timeTableString = gson.toJson(modifiedTimetable);
+        LogUtil.i(timeTableString);
+        Map<String, String> param = new HashMap<>();
+        param.put("data", timeTableString);
+        Net.put(Constant.URL.Update, param, new Net.NetworkListener() {
+            @Override
+            public void onSuccess(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    if (jsonObject.optInt("state") == 0) {
+                        toast("更新成功");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    remoteUpdate(modifiedTimetable);
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                remoteUpdate(modifiedTimetable);
+            }
+        });
+    }
+
+    private void remoteDelete(final int id){
+        Map<String, String> param = new HashMap<>();
+        param.put("id",id+"");
+        Net.delete(Constant.URL.Delete, param, new Net.NetworkListener() {
+            @Override
+            public void onSuccess(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    if (jsonObject.optInt("state") == 0) {
+                        toast("删除成功");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    remoteDelete(id);
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                remoteDelete(id);
+            }
+        });
     }
 }

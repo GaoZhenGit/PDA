@@ -9,7 +9,11 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import com.android.volley.toolbox.Volley;
 import com.androidquery.AQuery;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.gz.pda.Network.Net;
 import com.gz.pda.R;
 import com.gz.pda.adapter.TabPagerAdapter;
 import com.gz.pda.alarm.AlarmHelper;
@@ -25,9 +29,14 @@ import com.gz.pda.listener.OnTabSelectedListener;
 import com.gz.pda.utils.LogUtil;
 import com.gz.pda.view.PagerTabWidget;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class MainActivity extends BaseActivity {
@@ -149,6 +158,7 @@ public class MainActivity extends BaseActivity {
                 createTimetable.setUser(user);//设置本用户使用
                 DBhelper.getInstance().add(createTimetable);//添加到本地数据库
                 AlarmHelper.getInstance().add(createTimetable);//添加到闹钟队列，自动判断是否响铃
+                remoteAdd(createTimetable);
                 fragmentInitView();
                 break;
             case Constant.Code.SEARCH:
@@ -158,6 +168,33 @@ public class MainActivity extends BaseActivity {
             default:
                 break;
         }
+    }
+
+    private void remoteAdd(final TimeTable createTimetable) {
+        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+        String timeTableString = gson.toJson(createTimetable);
+        LogUtil.i(timeTableString);
+        Map<String, String> param = new HashMap<>();
+        param.put("data", timeTableString);
+        Net.post(Constant.URL.Add, param, new Net.NetworkListener() {
+            @Override
+            public void onSuccess(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    if (jsonObject.optInt("state") == 0) {
+                        toast("添加成功");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    remoteAdd(createTimetable);
+                }
+            }
+
+            @Override
+            public void onFail(String error) {
+                remoteAdd(createTimetable);
+            }
+        });
     }
 
     public void fragmentInitView() {
@@ -170,5 +207,15 @@ public class MainActivity extends BaseActivity {
 
     public void search() {
         startActivityForResult(new Intent(this, SearchActivity.class), Constant.Code.SEARCH);
+    }
+
+    @Override
+    protected void onDestroy() {
+        try {
+            Net.getmQueue().stop();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        super.onDestroy();
     }
 }

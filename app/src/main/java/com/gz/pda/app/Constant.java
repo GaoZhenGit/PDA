@@ -22,9 +22,20 @@ public interface Constant {
         public static final int SEARCH = 0x236;
     }
 
-    final class URL{
-        public static final String Server ="192.168.1.105";
-        public static final String Register = "http://"+Server+"/PDA/index.php/Home/Index/register";
-        public static final String Login = "http://"+Server+"/PDA/index.php/Home/Index/login";
+    final class URL2 {
+        public static final String Server = "192.168.1.105";
+        public static final String Register = "http://" + Server + "/PDA/index.php/Home/Index/register";
+        public static final String Login = "http://" + Server + "/PDA/index.php/Home/Index/login";
+
+    }
+
+    final class URL {
+        public static final String Server = "http://lindodo.cc:99/api/";
+        public static final String Register = Server + "register";
+        public static final String Login = Server + "login";
+        public static final String Add = Server + "add";
+        public static final String Update = Server + "update";
+        public static final String Delete = Server + "delete";
+        public static final String Get = Server + "get";
     }
 }

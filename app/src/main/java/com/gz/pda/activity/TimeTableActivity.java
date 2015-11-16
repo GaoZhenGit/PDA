@@ -159,7 +159,7 @@ public class TimeTableActivity extends BaseActivity {
         calendar.add(Calendar.MONTH, 3);
         calendarPickerView.init(new Date(), calendar.getTime())
                 .inMode(CalendarPickerView.SelectionMode.SINGLE)
-                .withSelectedDate(new Date());
+                .withSelectedDate(timeTable.getDate());
         isModify = true;
     }
 

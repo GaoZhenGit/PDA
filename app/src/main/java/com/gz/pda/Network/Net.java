@@ -60,6 +60,52 @@ public class Net {
         mQueue.add(stringRequest);
     }
 
+    public static void put(String httpurl, final Map<String, String> params, final NetworkListener networkListener) {
+        StringRequest stringRequest = new StringRequest8(Request.Method.PUT, Net.context, httpurl,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        LogUtil.i("volley", "response -> " + response);
+                        networkListener.onSuccess(response);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                LogUtil.i("volley error", error.getMessage() + "");
+                networkListener.onFail(error.getMessage());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                //在这里设置需要post的参数
+                return params;
+            }
+        };
+        mQueue.add(stringRequest);
+    }
+
+    public static void delete(String httpurl, final Map<String, String> params, final NetworkListener networkListener) {
+        httpurl += "?";
+        for (Map.Entry<String, String> entry : params.entrySet()) {
+            httpurl += entry.getKey() + "=" + entry.getValue();
+        }
+        StringRequest stringRequest = new StringRequest8(Request.Method.PUT, Net.context, httpurl,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        LogUtil.i("volley", "response -> " + response);
+                        networkListener.onSuccess(response);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                LogUtil.i("volley error", error.getMessage() + "");
+                networkListener.onFail(error.getMessage());
+            }
+        });
+        mQueue.add(stringRequest);
+    }
+
     public static void login(final Map<String, String> params, final NetworkListener networkListener) {
         StringRequest stringRequest = new CookieStoreRequest(Request.Method.POST, Net.context, Constant.URL.Login,
                 new Response.Listener<String>() {
