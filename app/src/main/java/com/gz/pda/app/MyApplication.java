@@ -5,6 +5,7 @@ import android.app.Application;
 import com.gz.pda.Network.Net;
 import com.gz.pda.alarm.AlarmHelper;
 import com.gz.pda.db.DBhelper;
+import com.gz.pda.sys.SysHelper;
 
 /**
  * the hole application

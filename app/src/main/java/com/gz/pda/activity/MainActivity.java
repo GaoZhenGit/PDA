@@ -26,6 +26,7 @@ import com.gz.pda.fragment.CalendarFragment;
 import com.gz.pda.fragment.TimeTableFragment;
 import com.gz.pda.fragment.UserFragment;
 import com.gz.pda.listener.OnTabSelectedListener;
+import com.gz.pda.sys.SysHelper;
 import com.gz.pda.utils.LogUtil;
 import com.gz.pda.view.PagerTabWidget;
 
@@ -46,6 +47,7 @@ public class MainActivity extends BaseActivity {
     protected TabPagerAdapter mPagerAdapter;
     protected ViewPager mViewPager;
     private List<Fragment> fragments;
+    private SysHelper sysHelper;
 
     @Override
     protected void fetchData() {
@@ -54,6 +56,7 @@ public class MainActivity extends BaseActivity {
         fragments.add(new TimeTableFragment());
         fragments.add(new CalendarFragment());
         fragments.add(new UserFragment());
+        SysHelper sysHelper = new SysHelper(this);
     }
 
     @Override

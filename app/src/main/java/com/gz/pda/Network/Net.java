@@ -89,7 +89,25 @@ public class Net {
         for (Map.Entry<String, String> entry : params.entrySet()) {
             httpurl += entry.getKey() + "=" + entry.getValue();
         }
-        StringRequest stringRequest = new StringRequest8(Request.Method.GET, Net.context, httpurl,
+        StringRequest stringRequest = new StringRequest8(Request.Method.DELETE, Net.context, httpurl,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        LogUtil.i("volley", "response -> " + response);
+                        networkListener.onSuccess(response);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                LogUtil.i("volley error", error.getMessage() + "");
+                networkListener.onFail(error.getMessage());
+            }
+        });
+        mQueue.add(stringRequest);
+    }
+
+    public static void get(final NetworkListener networkListener){
+        StringRequest stringRequest = new StringRequest8(Request.Method.GET, Net.context, Constant.URL.Get,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
