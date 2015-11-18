@@ -16,7 +16,7 @@ import java.util.Date;
  */
 @DatabaseTable(tableName = "time_table")
 public class TimeTable implements Serializable, Comparable<TimeTable> {
-    @DatabaseField(generatedId = true)
+    @DatabaseField(id = true)
     @Expose
     private int id;
 
@@ -50,7 +50,7 @@ public class TimeTable implements Serializable, Comparable<TimeTable> {
 
     @DatabaseField(columnName = "alarm")
     @Expose
-    private boolean alarm = false;
+    private int alarm = 0;
 
     @DatabaseField(columnName = "star")
     @Expose
@@ -68,11 +68,23 @@ public class TimeTable implements Serializable, Comparable<TimeTable> {
     }
 
     public boolean isAlarm() {
-        return alarm;
+        if (this.alarm == 1) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public void setAlarm(boolean alarm) {
-        this.alarm = alarm;
+        if (alarm) {
+            this.alarm = 1;
+        } else {
+            this.alarm = 0;
+        }
+    }
+
+    public void setAlarm(int i) {
+        this.alarm = i;
     }
 
     public String getTitle() {
@@ -192,9 +204,9 @@ public class TimeTable implements Serializable, Comparable<TimeTable> {
         this.minute = calendar.get(Calendar.MINUTE);
     }
 
-    public Date getDate(){
+    public Date getDate() {
         Calendar calendar = Calendar.getInstance();
-        calendar.set(year,month-1,day,hour,minute);
+        calendar.set(year, month - 1, day, hour, minute);
         return calendar.getTime();
     }
 

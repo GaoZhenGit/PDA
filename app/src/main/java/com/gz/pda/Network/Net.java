@@ -89,7 +89,7 @@ public class Net {
         for (Map.Entry<String, String> entry : params.entrySet()) {
             httpurl += entry.getKey() + "=" + entry.getValue();
         }
-        StringRequest stringRequest = new StringRequest8(Request.Method.PUT, Net.context, httpurl,
+        StringRequest stringRequest = new StringRequest8(Request.Method.GET, Net.context, httpurl,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

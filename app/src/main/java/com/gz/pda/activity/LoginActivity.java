@@ -16,10 +16,7 @@ import com.gz.pda.utils.LogUtil;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -35,6 +32,12 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void fetchData() {
+        //启动网络队列
+        try {
+            Net.getmQueue().start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         //检查是否登录
         User user = DBhelper.getInstance().getFirstUser();
         if (user != null) {
@@ -62,13 +65,12 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void setListener() {
         aQuery.id(R.id.btn_title_left).clicked(this, "onBackPressed");
-        aQuery.id(R.id.login_btn).clicked(this, "login2");
+        aQuery.id(R.id.login_btn).clicked(this, "login");
         aQuery.id(R.id.btn_title_right).clicked(this, "register");
     }
 
     public void login() {
         String phoneString = phone.getText().toString();
-//        String usernameString = username.getText().toString();
         String passwordString = password.getText().toString();
 
         if (phoneString.length() == 0 || passwordString.length() == 0) {
@@ -82,10 +84,9 @@ public class LoginActivity extends BaseActivity {
         //转换gson格式
         gson = new Gson();
         String data = gson.toJson(user);
+        LogUtil.i(data);
         Map<String, String> param = new HashMap<>();
-//        param.put("username", user.getUsername());
-//        param.put("password", user.getPassword());
-        param.put("data",gson.toJson(user));
+        param.put("data",data);
         //发起网络请求
         Net.login(param, new Net.NetworkListener() {
             @Override
@@ -103,7 +104,7 @@ public class LoginActivity extends BaseActivity {
                             for (TimeTable timeTable : user.getTimeTables()) {
                                 timeTable.setUser(user);
                                 DBhelper.getInstance().add(timeTable);
-                                AlarmHelper.getInstance().add(timeTable);
+                                AlarmHelper.getInstance().add(timeTable);//加入闹钟队列
                             }
                         }
                         toast("登录成功");

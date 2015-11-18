@@ -13,11 +13,13 @@ import com.google.gson.GsonBuilder;
 import com.gz.pda.R;
 import com.gz.pda.activity.EditActivity;
 import com.gz.pda.activity.LoginActivity;
+import com.gz.pda.alarm.AlarmHelper;
 import com.gz.pda.app.Constant;
 import com.gz.pda.datamodel.TimeTable;
 import com.gz.pda.datamodel.User;
 import com.gz.pda.db.DBhelper;
 import com.gz.pda.utils.LogUtil;
+import com.gz.pda.utils.SpUtils;
 import com.j256.ormlite.table.TableUtils;
 
 import java.io.File;
@@ -99,7 +101,10 @@ public class UserFragment extends BaseFragment {
             public void onClick(View v) {
                 //清除数据库
                 DBhelper.getInstance().drop();
+                SpUtils spUtils = new SpUtils(getContext());
+                spUtils.clear();
                 getActivity().finish();
+                AlarmHelper.getInstance().cancelAll();
                 startActivity(new Intent(getContext(), LoginActivity.class));
             }
         });

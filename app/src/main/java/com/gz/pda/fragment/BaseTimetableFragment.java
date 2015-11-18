@@ -73,6 +73,8 @@ public abstract class BaseTimetableFragment extends BaseFragment {
                         .setItems(items, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                //远程删除
+                                remoteDelete(timeTables.get(position).getId());
                                 //数据库中删除
                                 DBhelper.getInstance().delete(timeTables.get(position));
                                 //闹钟队列中删除
@@ -82,8 +84,6 @@ public abstract class BaseTimetableFragment extends BaseFragment {
                                 if(mainActivity instanceof MainActivity){
                                     ((MainActivity)mainActivity).fragmentInitView();
                                 }
-                                //远程删除
-                                remoteDelete(timeTables.get(position).getId());
                             }
                         })
                         .create();
@@ -142,7 +142,7 @@ public abstract class BaseTimetableFragment extends BaseFragment {
             public void onSuccess(String response) {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
-                    if (jsonObject.optInt("state") == 0) {
+                    if (jsonObject.optInt("state") == 1) {
                         toast("更新成功");
                     }
                 } catch (JSONException e) {
@@ -166,7 +166,7 @@ public abstract class BaseTimetableFragment extends BaseFragment {
             public void onSuccess(String response) {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
-                    if (jsonObject.optInt("state") == 0) {
+                    if (jsonObject.optInt("state") == 1) {
                         toast("删除成功");
                     }
                 } catch (JSONException e) {

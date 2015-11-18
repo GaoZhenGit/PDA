@@ -9,6 +9,9 @@ import android.os.Bundle;
 
 import com.gz.pda.app.Constant;
 import com.gz.pda.datamodel.TimeTable;
+import com.gz.pda.datamodel.User;
+import com.gz.pda.db.DBhelper;
+
 import java.util.Calendar;
 import java.util.Date;
 
@@ -34,10 +37,10 @@ public class AlarmHelper {
 
     //添加到闹钟队列
     public void add(TimeTable timeTable) {
-        if(!timeTable.isAlarm()){
+        if (!timeTable.isAlarm()) {
             return;
         }
-        switch (timeTable.getDate().compareTo(new Date())){
+        switch (timeTable.getDate().compareTo(new Date())) {
             case -1:
             case 0:
                 return;
@@ -57,8 +60,8 @@ public class AlarmHelper {
     }
 
     //更新闹钟队列项（有无闹钟）
-    public void update (TimeTable timeTable){
-        if (!timeTable.isAlarm()){
+    public void update(TimeTable timeTable) {
+        if (!timeTable.isAlarm()) {
             cancel(timeTable);
         } else {
             add(timeTable);
@@ -72,5 +75,13 @@ public class AlarmHelper {
         AlarmManager alarmManager =
                 (AlarmManager) context.getSystemService(Activity.ALARM_SERVICE);
         alarmManager.cancel(pendingIntent);
+    }
+
+    //取消所有闹钟队列
+    public void cancelAll() {
+        User user = DBhelper.getInstance().getFirstUser();
+        for (TimeTable timeTable : user.getTimeTables()) {
+            cancel(timeTable);
+        }
     }
 }

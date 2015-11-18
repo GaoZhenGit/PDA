@@ -154,6 +154,7 @@ public class MainActivity extends BaseActivity {
                 //创建日程回调
                 TimeTable createTimetable = (TimeTable) data.getExtras()
                         .getSerializable(Constant.DataKey.TIMETABLE);
+                createTimetable.setId(((int)System.currentTimeMillis()/1000));
                 User user = DBhelper.getInstance().getFirstUser();
                 createTimetable.setUser(user);//设置本用户使用
                 DBhelper.getInstance().add(createTimetable);//添加到本地数据库
@@ -211,11 +212,11 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onDestroy() {
-        try {
-            Net.getmQueue().stop();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Net.getmQueue().stop();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
         super.onDestroy();
     }
 }
