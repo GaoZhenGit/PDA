@@ -59,7 +59,6 @@ public class CalendarFragment extends BaseTimetableFragment {
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(date);
             if (calendar.compareTo(minYear)==1&&calendar.compareTo(maxYear)==-1){
-                LogUtil.i("highlite"+date.toString());
                 noOverDates.add(date);
             }
         }
