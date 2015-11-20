@@ -114,7 +114,7 @@ public class TimeTableActivity extends BaseActivity {
         text.setFocusableInTouchMode(true);
         text.setFocusable(true);
         InputMethodManager inputManager =
-                (InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
+                (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputManager.showSoftInput(title, 0);
         isModify = true;
     }
@@ -153,11 +153,14 @@ public class TimeTableActivity extends BaseActivity {
                 .create();
         alertDialog.show();
 
-        //初始化选择日历界面，从今天起3个月的计划
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(new Date());
-        calendar.add(Calendar.MONTH, 3);
-        calendarPickerView.init(new Date(), calendar.getTime())
+        //初始化选择日历界面，从原来的日期起5个月的计划
+        Calendar calendarEnd = Calendar.getInstance();
+        calendarEnd.setTime(new Date());
+        calendarEnd.add(Calendar.MONTH, 5);
+        Calendar calendarStart = Calendar.getInstance();
+        calendarStart.setTime(timeTable.getDate());
+        calendarStart.add(Calendar.YEAR, -1);
+        calendarPickerView.init(calendarStart.getTime(), calendarEnd.getTime())
                 .inMode(CalendarPickerView.SelectionMode.SINGLE)
                 .withSelectedDate(timeTable.getDate());
         isModify = true;
@@ -177,7 +180,7 @@ public class TimeTableActivity extends BaseActivity {
                         timeTable.setHour(timePicker.getCurrentHour());
                         timeTable.setMinute(timePicker.getCurrentMinute());
                         aQuery.id(R.id.btn_table_time).text(timeTable.getHourString()
-                                +":"+timeTable.getMinuteString());
+                                + ":" + timeTable.getMinuteString());
                     }
                 })
                 .setNegativeButton("取消", new DialogInterface.OnClickListener() {

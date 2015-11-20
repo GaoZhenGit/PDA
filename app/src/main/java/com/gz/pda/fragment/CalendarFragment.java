@@ -51,7 +51,19 @@ public class CalendarFragment extends BaseTimetableFragment {
         timeTableAdapter.notifyDataSetChanged();
         //高亮有timetable的日期
         calendarPickerView.clearHighlightedDates();
-        calendarPickerView.highlightDates(getTableDates());
+        Collection<Date> highLightDates = getTableDates();
+        //去除在显示日期外的日程
+        List<Date> noOverDates = new ArrayList<>();
+        for (Date date : highLightDates){
+            if(date.getYear()==minYear.get(Calendar.YEAR)
+                    &&date.getMonth()>minYear.get(Calendar.MONTH)
+                    &&date.getMonth()<maxYear.get(Calendar.MONTH)
+                    &&date.getDate()>minYear.get(Calendar.DATE)
+                    &&date.getDate()<maxYear.get(Calendar.DATE)){
+                noOverDates.add(date);
+            }
+        }
+        calendarPickerView.highlightDates(noOverDates);
     }
 
 
