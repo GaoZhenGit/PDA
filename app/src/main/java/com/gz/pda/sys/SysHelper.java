@@ -82,11 +82,9 @@ public class SysHelper {
         }
     }
 
-//    public static void stop(){
-//        if(instance!=null){
-//            instance.timer.cancel();
-//        }
-//    }
+    public void stop(){
+        timer.cancel();
+    }
 
     private void add(List<TimeTable> timeTables){
         User user = DBhelper.getInstance().getFirstUser();

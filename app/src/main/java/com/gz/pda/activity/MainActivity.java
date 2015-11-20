@@ -56,7 +56,7 @@ public class MainActivity extends BaseActivity {
         fragments.add(new TimeTableFragment());
         fragments.add(new CalendarFragment());
         fragments.add(new UserFragment());
-        SysHelper sysHelper = new SysHelper(this);
+        sysHelper = new SysHelper(this);
     }
 
     @Override
@@ -215,11 +215,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onDestroy() {
-//        try {
-//            Net.getmQueue().stop();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        sysHelper.stop();
         super.onDestroy();
     }
 }
