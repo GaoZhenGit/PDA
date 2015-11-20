@@ -8,6 +8,7 @@ import com.gz.pda.R;
 import com.gz.pda.datamodel.TimeTable;
 import com.gz.pda.datamodel.User;
 import com.gz.pda.db.DBhelper;
+import com.gz.pda.utils.LogUtil;
 import com.squareup.timessquare.CalendarPickerView;
 
 import java.util.ArrayList;
@@ -55,11 +56,10 @@ public class CalendarFragment extends BaseTimetableFragment {
         //去除在显示日期外的日程
         List<Date> noOverDates = new ArrayList<>();
         for (Date date : highLightDates){
-            if(date.getYear()==minYear.get(Calendar.YEAR)
-                    &&date.getMonth()>minYear.get(Calendar.MONTH)
-                    &&date.getMonth()<maxYear.get(Calendar.MONTH)
-                    &&date.getDate()>minYear.get(Calendar.DATE)
-                    &&date.getDate()<maxYear.get(Calendar.DATE)){
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+            if (calendar.compareTo(minYear)==1&&calendar.compareTo(maxYear)==-1){
+                LogUtil.i("highlite"+date.toString());
                 noOverDates.add(date);
             }
         }
