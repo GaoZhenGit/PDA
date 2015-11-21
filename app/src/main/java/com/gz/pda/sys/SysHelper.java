@@ -1,6 +1,5 @@
 package com.gz.pda.sys;
 
-import android.content.Context;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -8,10 +7,12 @@ import com.google.gson.reflect.TypeToken;
 import com.gz.pda.Network.Net;
 import com.gz.pda.activity.MainActivity;
 import com.gz.pda.alarm.AlarmHelper;
+import com.gz.pda.app.Constant;
 import com.gz.pda.datamodel.TimeTable;
 import com.gz.pda.datamodel.User;
 import com.gz.pda.db.DBhelper;
 import com.gz.pda.utils.LogUtil;
+import com.gz.pda.utils.SpUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,12 +22,14 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
+ * sys between phone and phone ,phone and web
  * Created by host on 2015/11/19.
  */
 public class SysHelper {
     private Gson gson;
     private TimerTask timerTask;
     private Timer timer;
+    private SpUtils spUtils;
     private MainActivity mainActivity;
 //    private static SysHelper instance;
 //
@@ -37,10 +40,11 @@ public class SysHelper {
     public SysHelper(MainActivity mainActivity) {
         gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
         this.mainActivity = mainActivity;
+        spUtils = new SpUtils(mainActivity);
         timerTask = new TimerTask() {
             @Override
             public void run() {
-                Net.get(new Net.NetworkListener() {
+                Net.get(spUtils.getValue(Constant.DataKey.ORDDERS,0),new Net.NetworkListener() {
                     @Override
                     public void onSuccess(String response) {
                         sysOperation(response);
@@ -76,6 +80,9 @@ public class SysHelper {
             }.getType());
             this.delete(delete);
             LogUtil.i(jsonObject.optString("delete"));
+
+            spUtils.setValue(Constant.DataKey.ORDDERS, jsonObject.optInt("maxOrder"));
+            LogUtil.i(jsonObject.optInt("maxOrder")+"");
 
         } catch (JSONException e) {
             e.printStackTrace();

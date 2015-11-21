@@ -106,8 +106,9 @@ public class Net {
         mQueue.add(stringRequest);
     }
 
-    public static void get(final NetworkListener networkListener){
-        StringRequest stringRequest = new StringRequest8(Request.Method.GET, Net.context, Constant.URL.Get,
+    public static void get(int order, final NetworkListener networkListener) {
+        String url = Constant.URL.Get + "?orders=" + order;
+        StringRequest stringRequest = new StringRequest8(Request.Method.GET, Net.context, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
