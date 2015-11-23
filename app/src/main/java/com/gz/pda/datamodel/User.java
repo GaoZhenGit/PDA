@@ -34,6 +34,8 @@ public class User implements Serializable{
 
     private String password;
 
+    private String aeskey;
+
     public String getUsername() {
         return username;
     }
@@ -72,5 +74,13 @@ public class User implements Serializable{
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getAeskey() {
+        return aeskey;
+    }
+
+    public void setAeskey(String aeskey) {
+        this.aeskey = aeskey;
     }
 }

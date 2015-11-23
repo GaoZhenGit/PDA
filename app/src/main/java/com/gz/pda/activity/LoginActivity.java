@@ -6,12 +6,15 @@ import android.widget.EditText;
 import com.androidquery.AQuery;
 import com.google.gson.Gson;
 import com.gz.pda.Network.Net;
+import com.gz.pda.Network.Security;
 import com.gz.pda.R;
 import com.gz.pda.alarm.AlarmHelper;
+import com.gz.pda.app.Constant;
 import com.gz.pda.datamodel.TimeTable;
 import com.gz.pda.datamodel.User;
 import com.gz.pda.db.DBhelper;
 import com.gz.pda.utils.LogUtil;
+import com.gz.pda.utils.SpUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -81,6 +84,10 @@ public class LoginActivity extends BaseActivity {
         User user = new User();
         user.setPhone(phoneString);
         user.setPassword(passwordString);
+        String key = Security.randomKey();
+        LogUtil.i("aeskey:"+key);
+        new SpUtils(this).setValue(Constant.DataKey.AESKEY,key);
+        user.setAeskey(key);
         //转换gson格式
         gson = new Gson();
         String data = gson.toJson(user);

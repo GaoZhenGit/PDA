@@ -10,6 +10,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.gz.pda.app.Constant;
 import com.gz.pda.utils.LogUtil;
+import com.gz.pda.utils.SpUtils;
 
 import java.util.Map;
 
@@ -37,6 +38,7 @@ public class Net {
     }
 
     public static void post(String httpurl, final Map<String, String> params, final NetworkListener networkListener) {
+        deCodeData(params);//加密数据
         StringRequest stringRequest = new StringRequest8(Request.Method.POST, Net.context, httpurl,
                 new Response.Listener<String>() {
                     @Override
@@ -61,6 +63,7 @@ public class Net {
     }
 
     public static void put(String httpurl, final Map<String, String> params, final NetworkListener networkListener) {
+        deCodeData(params);//加密数据
         StringRequest stringRequest = new StringRequest8(Request.Method.PUT, Net.context, httpurl,
                 new Response.Listener<String>() {
                     @Override
@@ -147,6 +150,21 @@ public class Net {
             }
         };
         mQueue.add(stringRequest);
+    }
+
+    //算法加密
+    private static void deCodeData(Map<String, String> param) {
+        SpUtils spUtils = new SpUtils(Net.context);
+        String key = spUtils.getValue(Constant.DataKey.AESKEY, "1234567890123456");
+        String data = ""+param.get("data");
+        data = Security.AES_Encrypt(key,data);
+        param.put("data",data);
+    }
+
+    private static void storeAES() {
+        String key = Security.randomKey();
+        SpUtils spUtils = new SpUtils(Net.context);
+        spUtils.setValue(Constant.DataKey.AESKEY, key);
     }
 
 
