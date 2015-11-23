@@ -32,8 +32,8 @@ public interface Constant {
 
     final class URL {
 //        public static final String Server = "http://lindodo.cc:99/api/";
-        public static final String Server = "http://192.168.1.101/pda/index.php/Home/Index/";
-//        public static final String Server = "http://139.129.18.117/pda/index.php/Home/Index/";
+//        public static final String Server = "http://192.168.1.101/pda/index.php/Home/Index/";
+        public static final String Server = "http://139.129.18.117/pda/index.php/Home/Index/";
         public static final String Register = Server + "register";
         public static final String Login = Server + "login";
         public static final String Add = Server + "add";
