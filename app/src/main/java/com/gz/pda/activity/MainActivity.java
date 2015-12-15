@@ -143,7 +143,21 @@ public class MainActivity extends BaseActivity {
     }
 
     public void createTimetable() {
-        startActivityForResult(new Intent(this, TimeTableActivity.class), Constant.Code.CREATE_TIMETABLE);
+        AlertDialog alertDialog = new AlertDialog.Builder(this)
+                .setNegativeButton("自己", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        startActivityForResult(new Intent(MainActivity.this, TimeTableActivity.class), Constant.Code.CREATE_TIMETABLE);
+                    }
+                })
+                .setPositiveButton("好友", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        startActivityForResult(new Intent(MainActivity.this, FriendTimetableActivity.class), Constant.Code.CREATE_TIMETABLE);
+                    }
+                })
+                .setTitle("选择添加日期的对象").create();
+        alertDialog.show();
     }
 
     @Override

@@ -1,0 +1,127 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/defalut"
+    android:orientation="vertical"
+    tools:context="com.ibm.gz.learn_cloud.activity.NoteActivity">
+
+    <include
+        layout="@layout/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/btn_timetable_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/message_margin"
+                android:background="@color/defalut">
+
+                <EditText
+                    android:id="@+id/timetable_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/button_height"
+                    android:background="@color/defalut"
+                    android:gravity="center_vertical"
+                    android:hint="请输入标题"
+                    android:maxLength="15"
+                    android:paddingLeft="@dimen/margin_left"
+                    android:paddingRight="@dimen/margin_right"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_size_large"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    tools:text="这个是题目" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_below="@+id/timetable_title"
+                    android:layout_marginLeft="@dimen/margin_left"
+                    android:layout_marginRight="@dimen/margin_right"
+                    android:background="@color/grey" />
+
+                <ImageView
+                    android:layout_width="@dimen/icon_edge"
+                    android:layout_height="@dimen/icon_edge"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/margin_right"
+                    android:src="@mipmap/icon_right_grey"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_table_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left"
+                    android:textSize="@dimen/text_size_middle"
+                    tools:text="2015-11-1" />
+
+                <Button
+                    android:id="@+id/btn_table_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left"
+                    android:textSize="@dimen/text_size_middle"
+                    tools:text="18:30" />
+
+                <ImageView
+                    android:id="@+id/btn_alarm"
+                    android:layout_width="@dimen/drawer_img_edge"
+                    android:layout_height="@dimen/drawer_img_edge"
+                    android:layout_marginLeft="@dimen/margin_left"
+                    android:src="@mipmap/ic_alarm" />
+
+                <CheckBox
+                    android:id="@+id/cb_alarm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left" />
+
+                <ImageView
+                    android:layout_width="@dimen/drawer_img_edge"
+                    android:layout_height="@dimen/drawer_img_edge"
+                    android:layout_marginLeft="@dimen/margin_left"
+                    android:src="@mipmap/ic_add"/>
+
+
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/timetable_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_left"
+                android:layout_marginRight="@dimen/margin_right"
+                android:layout_marginTop="@dimen/margin_top"
+                android:background="@drawable/edit_text_area"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:gravity="top"
+                android:hint="写下你的计划..."
+                android:maxHeight="250dp"
+                android:minHeight="200dp"
+                android:padding="5dp"
+                android:textColor="@color/black" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

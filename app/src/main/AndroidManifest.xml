@@ -39,7 +39,13 @@
         <activity
             android:name=".activity.TimeTableActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.FriendTimetableActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".activity.SearchActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.FriendActivity"
             android:screenOrientation="portrait"/>
 
         <service

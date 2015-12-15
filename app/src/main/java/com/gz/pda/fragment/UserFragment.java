@@ -12,6 +12,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.gz.pda.R;
 import com.gz.pda.activity.EditActivity;
+import com.gz.pda.activity.FriendActivity;
 import com.gz.pda.activity.LoginActivity;
 import com.gz.pda.alarm.AlarmHelper;
 import com.gz.pda.app.Constant;
@@ -108,6 +109,14 @@ public class UserFragment extends BaseFragment {
                 spUtils.clear();
                 getActivity().finish();
                 startActivity(new Intent(getContext(), LoginActivity.class));
+            }
+        });
+
+        View friend = findView(R.id.btn_friend);
+        friend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), FriendActivity.class));
             }
         });
     }
